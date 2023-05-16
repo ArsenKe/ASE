@@ -9,4 +9,8 @@ public interface EventRepository {
 
 
     List<Event> getEventsByTagAndAttendanceStatus(String eventId, String attendeeId);
+
+    Event[] getEventsByMarkAndAttendee(Object id, Object eventId);
+
+    List<Event> getEventsByTagAndAttendance(String attendeeId, String eventId);
 }

@@ -16,34 +16,36 @@ import java.util.List;
 @AllArgsConstructor
 public class CalendarExportService {
 
-    ExporterRepository exporterRepository;
-    TagRepository tagRepository;
-    MarkRepository markRepository;
-    EventRepository eventRepository;
-    AttendanceRepository attendanceRepository;
+    private ExporterRepository exporterRepository;
+    private TagRepository tagRepository;
+    private MarkRepository markRepository;
+    private EventRepository eventRepository;
+    private AttendanceRepository attendanceRepository;
 
-    public Format exportTaggedEvents(String attendeeId, String eventId, String format) {
-        List<Event> events = eventRepository.getEventsByTagAndAttendanceStatus(eventId, attendeeId);
-        CalendarExporter exporter = exporterRepository.getExporter(format.toUpperCase());
-        return exporter.export(events, format);
+    public Format exportTaggedEvents(Attendee attendee, Tag tag, String format) {
+        Event[] events = eventRepository.getEventsByTagAndAttendance(attendee.getId(), tag.getId());
+        Exporter exporter = exporterRepository.getExporter(Format.valueOf(format.toUpperCase()));
+        return exporter.getFormat();
+        // Other logic to export events in the desired format
     }
 
-    public Format exportMarkedEvents(String attendeeId, String eventId, String format) {
-        List<Event> events = eventRepository.getEventsByAttendeeAndMark(attendeeId, eventId);
-        CalendarExporter exporter = exporterRepository.getExporter(format.toUpperCase());
-        return exporter.export(events, format);
+    public Format exportMarkedEvents(Attendee attendee, String format) {
+        Event[] events = eventRepository.getEventsByMarkAndAttendee(attendee.getId(), attendee.getEventId());
+        Exporter exporter = exporterRepository.getExporter(Format.valueOf(format.toUpperCase()));
+        return exporter.getFormat();
+        // Other logic to export events in the desired format
     }
 
-    public Format exportConfirmedAttendanceEvents(String attendeeId, String eventId, String format) {
-        List<Event> events = eventRepository.getEventsByAttendeeAndConfirmedAttendance(attendeeId, eventId);
-        CalendarExporter exporter = exporterRepository.getExporter(format.toUpperCase());
-        return exporter.export(events, format);
+    public Format exportConfirmedAttendanceEvents(Attendee attendee, String format) {
+        Event[] events = eventRepository.getEventsByAttendanceStatus(attendee.getId(), attendee.getEventId(), AttendanceStatus.CONFIRMED);
+        Exporter exporter = exporterRepository.getExporter(Format.valueOf(format.toUpperCase()));
+        return exporter.getFormat();
+        // Other logic to export events in the desired format
     }
 
-    public Format exportEvent(List<Event> events, String format) {
-        CalendarExporter exporter = exporterRepository.getExporter(format.toUpperCase());
-        return exporter.export(events, format);
+    public Format exportEvent(Event[] events, String format) {
+        Exporter exporter = exporterRepository.getExporter(Format.valueOf(format.toUpperCase()));
+        return exporter.getFormat();
+        // Other logic to export events in the desired format
     }
-
-
 }

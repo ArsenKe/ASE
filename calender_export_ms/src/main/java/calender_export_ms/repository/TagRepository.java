@@ -9,4 +9,5 @@ public interface TagRepository {
  List<Tag> getTagsForEvent(String eventId);
 
 
+    List<Tag> getTagsByEvent(String eventId);
 }
