@@ -6,6 +6,7 @@ import calender_export_ms.model.Format;
 import lombok.Getter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -24,7 +25,7 @@ public class ExporterRepository {
         return exporters.get(format);
     }
 
-    public Format exportEvent(Event[] events, Format format) {
+    public Format exportEvent(List<Event> events , Format format) {
         Exporter exporter = exporters.get(Format.valueOf(String.valueOf(format)));
         if (exporter != null) {
             return exporter.export(events, format);

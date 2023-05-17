@@ -6,8 +6,11 @@ import java.util.List;
 
 public interface TagRepository {
 
- List<Tag> getTagsForEvent(String eventId);
+    Tag getTagById(String tagId);
 
+    List<Tag> getTagsForEvent(String eventId);
 
     List<Tag> getTagsByEvent(String eventId);
+
+
 }

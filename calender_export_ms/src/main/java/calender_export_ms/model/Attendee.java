@@ -1,9 +1,21 @@
 package calender_export_ms.model;
 
-public class Attendee {
-    public Object getId() {
-    }
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-    public Object getEventId() {
-    }
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Attendee {
+    private String attendeeId;
+    private String eventId;
+    private boolean isAttending;
+
+
+
+
+
 }
