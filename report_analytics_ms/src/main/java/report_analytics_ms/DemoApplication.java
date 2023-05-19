@@ -1,4 +1,4 @@
-package report_analytics_ms.demo;
+package report_analytics_ms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

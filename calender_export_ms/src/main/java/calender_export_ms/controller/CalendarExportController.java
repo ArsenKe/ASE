@@ -22,34 +22,34 @@ public class CalendarExportController {
     private AttendanceRepository attendanceRepository;
 
 
-    public Format exportTaggedEvents(String attendeeId, String eventId, Format format) {
+    public Format exportTaggedEvents(String attendeeId, String eventId, String format) {
         // Retrieve events, attendance, and tags from respective repositories using API gateway
         List<Event> events = eventRepository.getEventsByTagAndAttendance(attendeeId, eventId);
         List<Attendee> attendance = attendanceRepository.getAttendanceByEventAndAttendee(attendeeId, eventId);
         List<Tag> tags = tagRepository.getTagsByEvent(eventId);
 
         // Export events using the appropriate exporter retrieved from the exporterRepository
-        Exporter exporter = exporterRepository.getExporter(format);
-        return exporter.export(events, format);
+        Exporter exporter = exporterRepository.getExporter(Format.valueOf(format));
+        return exporter.export(events, Format.valueOf(format));
     }
 
-    public Format exportMarkedEvents(String attendeeId, String eventId, Format format) {
+    public Format exportMarkedEvents(String attendeeId, String eventId, String format) {
         // Retrieve events and marks from respective repositories using API gateway
-        List<Event> events = List.of(eventRepository.getEventsByMarkAndAttendee(attendeeId, eventId));
+        List<Event> events = eventRepository.getEventsByMarkAndAttendee(attendeeId, eventId);
         List<Mark> marks = markRepository.getMarksByEventAndAttendee(attendeeId, eventId);
 
         // Export events using the appropriate exporter retrieved from the exporterRepository
-        Exporter exporter = exporterRepository.getExporter(format);
-        return exporter.export(events, format);
+        Exporter exporter = exporterRepository.getExporter(Format.valueOf(format));
+        return exporter.export(events, Format.valueOf(format));
     }
 
-    public Format exportConfirmedAttendanceEvents(String attendeeId, String eventId, Format format) {
+    public Format exportConfirmedAttendanceEvents(String attendeeId, String eventId, String format) {
         // Retrieve events and attendance from respective repositories using API gateway
         List<Event> events = eventRepository.getEventsByAttendanceStatus(attendeeId, eventId, AttendanceStatus.CONFIRMED);
         List<Attendee> attendance = attendanceRepository.getAttendanceByEventAndAttendee(attendeeId, eventId);
 
         // Export events using the appropriate exporter retrieved from the exporterRepository
-        Exporter exporter = exporterRepository.getExporter(format);
-        return exporter.export(events, format);
+        Exporter exporter = exporterRepository.getExporter(Format.valueOf(format));
+        return exporter.export(events, Format.valueOf(format));
     }
 }

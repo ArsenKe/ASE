@@ -1,5 +1,8 @@
 package calender_export_ms.model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 
 public class DatabaseConnection<SQL_Query> {
@@ -10,8 +13,14 @@ public class DatabaseConnection<SQL_Query> {
         return null;
     }
 
-   public void connectToDatabase() {
+   public void connectToDatabase() throws SQLException {
+       String url = "jdbc:mysql://localhost:3306/calender_export_ms";
+       String user = "root";
+       String password = "pass";
 
-    }
+       Connection conn = DriverManager.getConnection(url, user, password);
+
+       conn.close();
+   }
 
 }
